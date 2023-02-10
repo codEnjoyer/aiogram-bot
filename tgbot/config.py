@@ -20,6 +20,8 @@ class TgBot:
 
 @dataclass
 class Miscellaneous:
+    apples_url: str
+    pears_url: str
     other_params: str = None
 
 
@@ -30,7 +32,7 @@ class Config:
     misc: Miscellaneous
 
 
-def load_config(path: str = None):
+def load_config(path: str = None) -> Config:
     env = Env()
     env.read_env(path)
 
@@ -44,7 +46,10 @@ def load_config(path: str = None):
             host=env.str('DB_HOST'),
             password=env.str('DB_PASS'),
             user=env.str('DB_USER'),
-            database=env.str('DB_NAME')
+            database=env.str('DB_NAME'),
         ),
-        misc=Miscellaneous()
+        misc=Miscellaneous(
+            apples_url=env.str("URL_APPLES"),
+            pears_url=env.str("URL_PEARS"),
+        ),
     )
