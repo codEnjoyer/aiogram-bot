@@ -9,6 +9,7 @@ async def set_default_commands(bot: Bot) -> bool:
             BotCommand("start", "Запустить бота"),
             BotCommand("get_commands", "Получить доступные команды"),
             BotCommand("delete_commands", "Удалить доступные команды"),
+            BotCommand("test", "Начать тестирование"),
         ],
         scope=BotCommandScopeDefault()
     )

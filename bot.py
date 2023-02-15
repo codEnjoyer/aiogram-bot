@@ -11,6 +11,7 @@ from tgbot.handlers.admin import register_admin
 from tgbot.handlers.echo import register_echo
 from tgbot.handlers.users import register_user
 from tgbot.middlewares.environment import EnvironmentMiddleware
+from tgbot.states import register_states
 from tgbot.services import set_default_commands
 
 logger = logging.getLogger(__name__)
@@ -27,6 +28,7 @@ def register_all_filters(dp: Dispatcher) -> None:
 def register_all_handlers(dp: Dispatcher) -> None:
     register_admin(dp)
     register_user(dp)
+    register_states(dp)
 
     register_echo(dp)
 
