@@ -1,8 +1,12 @@
 import logging
 
+from aiogram import Dispatcher
 from aiogram.types import Message, CallbackQuery
+from aiogram.dispatcher.filters import Text
 
 from tgbot.keyboards.inline import choice_kb, apple_kb, pear_kb
+
+from ...keyboards.inline import buy_callback
 
 
 async def show_items(message: Message):
@@ -26,8 +30,15 @@ async def buying_pear(callback: CallbackQuery, callback_data: dict):
 
 
 async def buying_cancel(callback: CallbackQuery):
-
     await callback.message.edit_reply_markup()
     await callback.message.edit_text("Вы отменили покупку.")
     await callback.answer("Вы успешно отменили покупку.", show_alert=True)
     logging.info(f"Покупка отменена. callback = {callback.data}")
+
+
+def register_purchase(dp: Dispatcher):
+    dp.register_message_handler(show_items, Text(equals="Товары"))
+
+    dp.register_callback_query_handler(buying_apple, buy_callback.filter(item_name="apple"))
+    dp.register_callback_query_handler(buying_pear, buy_callback.filter(item_name="pear"))
+    dp.register_callback_query_handler(buying_cancel, Text(equals="cancel"))
